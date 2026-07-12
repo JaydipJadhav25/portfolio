@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jaydip Jadhav — Full-Stack Developer · Web3 · AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0B;
+    --panel:#131315;
+    --panel-2:#18181B;
+    --line:#26262A;
+    --line-soft:#1D1D20;
+    --text:#F2F1ED;
+    --text-dim:#8C8B92;
+    --lime:#C9FF3D;
+    --lime-dim:#3A4118;
+    --react:#61DAFB; --node:#5FA04E; --ts:#3178C6; --mongo:#47A248; --sol:#B6A6FF;
+    --aws:#FF9900; --docker:#2496ED; --tw:#38BDF8; --gql:#E10098; --three:#F2F1ED; --eth:#8C9EFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  ::selection{background:var(--lime); color:#0A0A0B;}
+  .display{font-family:'Unbounded',sans-serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 18px;} }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+
+  body::before{
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:radial-gradient(circle at 1.5px 1.5px, rgba(255,255,255,0.045) 1px, transparent 0);
+    background-size:28px 28px;
+  }
+  section, header{position:relative; z-index:1;}
+
+  /* ===== NAV ===== */
+  header.nav{position:fixed; top:0; left:0; right:0; z-index:100; border-bottom:1px solid var(--line-soft); background:rgba(10,10,11,0.75); backdrop-filter:blur(14px);}
+  .nav-inner{max-width:1240px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between;}
+  @media (max-width:640px){ .nav-inner{padding:16px 18px;} }
+  .logo{font-family:'Unbounded',sans-serif; font-weight:700; font-size:15px; letter-spacing:-0.01em;}
+  .logo span{color:var(--lime);}
+  .nav-links{display:flex; gap:30px; font-size:13px; font-weight:500; color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; background:var(--lime); color:#0A0A0B; padding:10px 18px; border-radius:8px;}
+  .nav-cta:hover{background:#fff;}
+  @media (max-width:820px){ .nav-links{display:none;} }
+
+  /* ===== HERO BENTO ===== */
+  .hero{padding:130px 0 40px;}
+  .bento{display:grid; grid-template-columns:repeat(12,1fr); gap:14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:28px; position:relative; overflow:hidden;}
+
+  .b-main{grid-column:span 8; padding:44px 40px;}
+  .b-photo{grid-column:span 4; grid-row:span 2; padding:16px; display:flex; flex-direction:column;}
+  .b-role{grid-column:span 4; display:flex; flex-direction:column; justify-content:center;}
+  .b-loc{grid-column:span 4; display:flex; flex-direction:column; justify-content:center;}
+  @media (max-width:900px){
+    .b-main{grid-column:span 12;}
+    .b-photo{grid-column:span 12; grid-row:auto;}
+    .b-role{grid-column:span 6;}
+    .b-loc{grid-column:span 6;}
+  }
+  @media (max-width:640px){ .b-role,.b-loc{grid-column:span 12;} .card{padding:22px;} .b-main{padding:30px 24px;} }
+
+  .tag-pill{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500; color:var(--lime); background:var(--lime-dim); border:1px solid rgba(201,255,61,0.25); padding:7px 14px; border-radius:100px; margin-bottom:22px;}
+  .tag-pill::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 8px var(--lime);}
+
+  h1.headline{font-family:'Unbounded',sans-serif; font-size:clamp(34px,4.6vw,54px); line-height:1.05; font-weight:800; letter-spacing:-0.02em; margin-bottom:22px;}
+  h1.headline .lime{color:var(--lime);}
+
+  .hero p.lede{font-size:16.5px; line-height:1.7; color:var(--text-dim); max-width:520px; margin-bottom:30px;}
+
+  .public{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px;}
+  .social-link{
+    display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:500;
+    color:var(--text-dim); border:1px solid var(--line); border-radius:100px; padding:8px 16px 8px 8px;
+    transition:all .18s ease;
+  }
+  .social-link:hover{color:var(--text); border-color:var(--lime);}
+  .social-ico{
+    width:24px; height:24px; border-radius:50%; background:var(--panel-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:700; color:var(--lime);
+  }
+
+  .hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600; padding:14px 24px; border-radius:10px; display:inline-flex; align-items:center; gap:8px; transition:all .18s ease;}
+  .btn-primary{background:var(--lime); color:#0A0A0B;}
+  .btn-primary:hover{background:#fff; transform:translateY(-2px);}
+  .btn-ghost{background:transparent; border:1px solid var(--line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--lime); color:var(--lime); transform:translateY(-2px);}
+
+  .b-photo .img-frame{border-radius:14px; overflow:hidden; flex:1; background:#1B1B1D; margin-bottom:14px;}
+  .b-photo .img-frame img{width:100%; height:100%; object-fit:cover; min-height:230px;}
+  .b-photo .cap{display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim);}
+  .b-photo .cap .live{color:var(--lime); display:flex; align-items:center; gap:6px;}
+  .b-photo .cap .live::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 6px var(--lime);}
+
+  .b-role .label, .b-loc .label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px;}
+  .roller{font-family:'Unbounded',sans-serif; font-size:21px; font-weight:700; height:30px; overflow:hidden; position:relative;}
+  .roller .track span{display:block; height:30px;}
+  .b-loc .big-num{font-family:'Unbounded',sans-serif; font-size:32px; font-weight:800; color:var(--lime);}
+  .b-loc .sub{font-size:12.5px; color:var(--text-dim); margin-top:4px;}
+
+  /* ===== SECTION SHARED ===== */
+  section.sect{padding:100px 0;}
+  .section-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:44px; flex-wrap:wrap;}
+  .sh-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--lime); letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:10px;}
+  .sh-title{font-family:'Unbounded',sans-serif; font-size:clamp(28px,3.4vw,38px); font-weight:700; letter-spacing:-0.01em;}
+  .sh-note{font-size:13.5px; color:var(--text-dim); max-width:280px; text-align:right;}
+  @media (max-width:640px){ .sh-note{display:none;} }
+
+  /* ===== STACK — main focus ===== */
+  .stack-section{background:var(--panel-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .stack-groups{display:flex; flex-direction:column; gap:36px;}
+  .stack-group-head{display:flex; align-items:center; gap:14px; margin-bottom:16px;}
+  .stack-group-head .gnum{font-family:'Unbounded',sans-serif; font-size:13px; font-weight:700; color:var(--text-dim); width:26px;}
+  .stack-group-head .gname{font-family:'Unbounded',sans-serif; font-size:16px; font-weight:600;}
+  .stack-group-head .gline{flex:1; height:1px; background:var(--line);}
+  .stack-group-head .gcount{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim);}
+  .chip-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px;}
+  .chip{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px;
+    display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .chip::before{content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--c, var(--lime));}
+  .chip:hover{transform:translateY(-4px); border-color:var(--c, var(--lime));}
+  .chip .chip-ico{font-family:'Unbounded',sans-serif; font-weight:800; font-size:15px; color:var(--c, var(--lime));}
+  .chip .chip-name{font-size:13.5px; font-weight:600;}
+  .chip-link{cursor:pointer;}
+  .chip-link .chip-handle{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim);}
+  .chip-link::after{
+    content:'↗'; position:absolute; top:14px; right:14px; font-size:13px; color:var(--text-dim);
+    transition:color .2s ease, transform .2s ease;
+  }
+  .chip-link:hover::after{color:var(--c, var(--lime)); transform:translate(2px,-2px);}
+
+  /* ===== ABOUT ===== */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{font-size:16px; line-height:1.8; color:var(--text-dim); margin-bottom:16px;}
+  .about-grid p b{color:var(--text); font-weight:600;}
+  .edu-card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px;}
+  .edu-card + .edu-card{margin-top:14px;}
+  .edu-card .school{font-family:'Unbounded',sans-serif; font-weight:600; font-size:15px; margin-bottom:5px;}
+  .edu-card .deg{font-size:13px; color:var(--text-dim); margin-bottom:14px;}
+  .edu-card .meta{display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim);}
+  .edu-card .meta b{color:var(--lime);}
+
+  /* ===== EXPERIENCE / PROJECTS ===== */
+  .work-grid{display:flex; flex-direction:column; gap:16px;}
+  .work-card{background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:30px 32px; transition:border-color .2s ease;}
+  .work-card:hover{border-color:#3a3a40;}
+  @media (max-width:640px){ .work-card{padding:22px;} }
+  .wc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:14px; flex-wrap:wrap;}
+  .wc-title{font-family:'Unbounded',sans-serif; font-size:19px; font-weight:600;}
+  .wc-badge{font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:500; color:#0A0A0B; background:var(--lime); padding:6px 12px; border-radius:100px; white-space:nowrap;}
+  .wc-problem{font-size:14px; color:var(--text-dim); line-height:1.65; margin-bottom:10px;}
+  .wc-problem b{color:var(--text);}
+  .wc-desc{font-size:15px; color:var(--text); line-height:1.75; margin-bottom:18px;}
+  .wc-tools{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .wc-tools span{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); border:1px solid var(--line); padding:6px 10px; border-radius:8px;}
+  .wc-links a{font-size:13px; font-weight:600; color:var(--lime);}
+  .wc-links a:hover{text-decoration:underline;}
+
+  /* ===== ACHIEVEMENTS / CERTS ===== */
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:800px){ .two-col{grid-template-columns:1fr;} }
+  .col-label{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px; display:block;}
+  .list-item{display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--line-soft); align-items:flex-start;}
+  .list-item:first-child{padding-top:0;}
+  .list-icon{width:36px; height:36px; flex-shrink:0; border-radius:10px; background:var(--panel); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--lime);}
+  .list-item .li-title{font-family:'Unbounded',sans-serif; font-weight:600; font-size:14px; margin-bottom:4px;}
+  .list-item .li-sub{font-size:12.5px; color:var(--text-dim); line-height:1.5;}
+  .list-item .li-date{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim); white-space:nowrap; margin-left:auto; padding-top:4px;}
+
+  /* ===== CONTACT ===== */
+  .contact-card{border-radius:28px; padding:64px 48px; text-align:center; background:var(--panel); border:1px solid var(--line); position:relative; overflow:hidden;}
+  @media (max-width:640px){ .contact-card{padding:44px 22px;} }
+  .contact-card::after{content:''; position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(201,255,61,0.12), transparent 70%); top:-150px; right:-100px; pointer-events:none;}
+  .contact-title{font-family:'Unbounded',sans-serif; font-size:clamp(28px,4.4vw,44px); font-weight:800; margin-bottom:18px; letter-spacing:-0.02em;}
+  .contact-title .lime{color:var(--lime);}
+  .contact-desc{color:var(--text-dim); font-size:15px; max-width:460px; margin:0 auto 32px; line-height:1.7;}
+  .contact-links{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; position:relative;}
+
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:32px 0 10px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-dim);}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">jaydip<span>.dev</span></div>
+    <nav class="nav-links">
+      <a href="#stack">Stack</a>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#achievements">Achievements</a>
+    </nav>
+    <a class="nav-cta" href="mailto:jaydipjadhav2512@gmail.com">Hire me →</a>
+  </div>
+</header>
+
+<!-- ===== HERO BENTO ===== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="bento">
+      <div class="card b-main">
+        <span class="tag-pill">Available for new opportunities</span>
+        <h1 class="headline">Full-Stack Developer<br>building <span class="lime">Web3</span> &amp; <span class="lime">AI</span>-native products.</h1>
+        <p class="lede">I'm Jaydip Jadhav — a MERN and blockchain developer from Pune, India, shipping real-world apps that pair scalable backends with on-chain trust and a little machine intelligence.</p>
+        <div class="public">
+          <a href="https://github.com/JaydipJadhav25" target="_blank" rel="noopener" class="social-link"><span class="social-ico">GH</span>GitHub</a>
+          <a href="https://www.linkedin.com/in/jaydip-jadhav-62172829a/" target="_blank" rel="noopener" class="social-link"><span class="social-ico">in</span>LinkedIn</a>
+          <a href="https://leetcode.com/u/5Nmxxpasz6/" target="_blank" rel="noopener" class="social-link"><span class="social-ico">LC</span>LeetCode</a>
+        </div>
+        <div class="hero-actions">
+          <a href="#stack" class="btn btn-primary">See my stack →</a>
+          <a href="Jaydip_Jadhav_Resume.pdf" download class="btn btn-ghost">Download résumé ↓</a>
+        </div>
+      </div>
+
+      <div class="card b-photo">
+        <div class="img-frame"><img src="profile.png" alt="Jaydip Jadhav" /></div>
+        <div class="cap"><span class="live">Open to work</span><span>Pune, IN</span></div>
+      </div>
+
+      <div class="card b-role">
+        <div class="label">Currently positioned as</div>
+        <div class="roller"><div class="track" id="roleTrack"><span>MERN Developer</span></div></div>
+      </div>
+
+      <div class="card b-loc">
+        <div class="label">Academic standing</div>
+        <div class="big-num">9.40<span style="font-size:16px;">/10</span></div>
+        <div class="sub">SGPA · BE Computer Engineering, 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STACK — the main event ===== -->
+<section class="sect stack-section" id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="sh-eyebrow">01 · Stack</span><h2 class="sh-title">What I build with</h2></div>
+      <p class="sh-note">Five categories. Every tool here has shipped in a real project below.</p>
+    </div>
+
+    <div class="stack-groups">
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">01</span><span class="gname">Languages</span><span class="gline"></span><span class="gcount">4 tools</span></div>
+        <div class="chip-grid">
+          <div class="chip" style="--c:#F0DB4F;"><span class="chip-ico">JS</span><span class="chip-name">JavaScript (ES6+)</span></div>
+          <div class="chip" style="--c:var(--ts);"><span class="chip-ico">TS</span><span class="chip-name">TypeScript</span></div>
+          <div class="chip" style="--c:#00599C;"><span class="chip-ico">C++</span><span class="chip-name">C++</span></div>
+          <div class="chip" style="--c:#EA2D2E;"><span class="chip-ico">JV</span><span class="chip-name">Java</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">02</span><span class="gname">Frontend</span><span class="gline"></span><span class="gcount">7 tools</span></div>
+        <div class="chip-grid">
+          <div class="chip" style="--c:var(--react);"><span class="chip-ico">⚛</span><span class="chip-name">React.js</span></div>
+          <div class="chip" style="--c:var(--text);"><span class="chip-ico">N</span><span class="chip-name">Next.js</span></div>
+          <div class="chip" style="--c:#DD0031;"><span class="chip-ico">A</span><span class="chip-name">Angular</span></div>
+          <div class="chip" style="--c:var(--tw);"><span class="chip-ico">TW</span><span class="chip-name">Tailwind CSS</span></div>
+          <div class="chip" style="--c:var(--three);"><span class="chip-ico">3D</span><span class="chip-name">Three.js</span></div>
+          <div class="chip" style="--c:#E44D26;"><span class="chip-ico">5</span><span class="chip-name">HTML5</span></div>
+          <div class="chip" style="--c:#264DE4;"><span class="chip-ico">3</span><span class="chip-name">CSS3</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">03</span><span class="gname">Backend</span><span class="gline"></span><span class="gcount">6 tools</span></div>
+        <div class="chip-grid">
+          <div class="chip" style="--c:var(--node);"><span class="chip-ico">⬢</span><span class="chip-name">Node.js</span></div>
+          <div class="chip" style="--c:var(--text);"><span class="chip-ico">EX</span><span class="chip-name">Express.js</span></div>
+          <div class="chip" style="--c:var(--lime);"><span class="chip-ico">API</span><span class="chip-name">REST APIs</span></div>
+          <div class="chip" style="--c:var(--gql);"><span class="chip-ico">GQ</span><span class="chip-name">GraphQL</span></div>
+          <div class="chip" style="--c:#4A90D9;"><span class="chip-ico">WS</span><span class="chip-name">WebSockets</span></div>
+          <div class="chip" style="--c:#4A90D9;"><span class="chip-ico">RTC</span><span class="chip-name">WebRTC</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">04</span><span class="gname">Blockchain</span><span class="gline"></span><span class="gcount">4 tools</span></div>
+        <div class="chip-grid">
+          <div class="chip" style="--c:var(--sol);"><span class="chip-ico">◆</span><span class="chip-name">Solidity</span></div>
+          <div class="chip" style="--c:var(--eth);"><span class="chip-ico">Ξ</span><span class="chip-name">Ethereum</span></div>
+          <div class="chip" style="--c:var(--sol);"><span class="chip-ico">SC</span><span class="chip-name">Smart Contracts</span></div>
+          <div class="chip" style="--c:var(--eth);"><span class="chip-ico">E5</span><span class="chip-name">Ethers.js</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">05</span><span class="gname">Tools &amp; Infra</span><span class="gline"></span><span class="gcount">8 tools</span></div>
+        <div class="chip-grid">
+          <div class="chip" style="--c:var(--mongo);"><span class="chip-ico">DB</span><span class="chip-name">MongoDB</span></div>
+          <div class="chip" style="--c:#00758F;"><span class="chip-ico">SQL</span><span class="chip-name">MySQL</span></div>
+          <div class="chip" style="--c:#F05032;"><span class="chip-ico">GIT</span><span class="chip-name">Git</span></div>
+          <div class="chip" style="--c:var(--docker);"><span class="chip-ico">DK</span><span class="chip-name">Docker</span></div>
+          <div class="chip" style="--c:var(--aws);"><span class="chip-ico">AWS</span><span class="chip-name">AWS</span></div>
+          <div class="chip" style="--c:#FCC624;"><span class="chip-ico">LX</span><span class="chip-name">Linux</span></div>
+          <div class="chip" style="--c:var(--text);"><span class="chip-ico">▲</span><span class="chip-name">Vercel</span></div>
+          <div class="chip" style="--c:#FF6C37;"><span class="chip-ico">PM</span><span class="chip-name">Postman</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stack-group-head"><span class="gnum">06</span><span class="gname">Find me online</span><span class="gline"></span><span class="gcount">3 profiles</span></div>
+        <div class="chip-grid">
+          <a class="chip chip-link" style="--c:#F2F1ED;" href="https://github.com/JaydipJadhav25" target="_blank" rel="noopener">
+            <span class="chip-ico">GH</span><span class="chip-name">GitHub</span><span class="chip-handle">@JaydipJadhav25</span>
+          </a>
+          <a class="chip chip-link" style="--c:#0A66C2;" href="https://linkedin.com/in/jaydipjadhav" target="_blank" rel="noopener">
+            <span class="chip-ico">in</span><span class="chip-name">LinkedIn</span><span class="chip-handle">@jaydipjadhav</span>
+          </a>
+          <a class="chip chip-link" style="--c:#FFA116;" href="https://leetcode.com/JaydipJadhav25" target="_blank" rel="noopener">
+            <span class="chip-ico">LC</span><span class="chip-name">LeetCode</span><span class="chip-handle">@JaydipJadhav25</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="sect" id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="sh-eyebrow">02 · About</span><h2 class="sh-title">The short version</h2></div>
+      <p class="sh-note">MERN + blockchain + a bit of applied AI, shipped under real deadlines.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a <b>full-stack developer</b> focused on the MERN stack, with a strong lean toward <b>blockchain</b> and applied <b>AI</b>. I like building products where a good interface, a solid backend, and verifiable on-chain logic all have to work together — mess-hall attendance systems, NFT platforms, event portals.</p>
+        <p>Most of what I've shipped has come out of tight, deadline-driven builds: a 3D event platform put together in five hours with a four-person team, an NFT minting flow with AI-based duplicate detection, a smart-contract-backed attendance tracker. I'm currently finishing my <b>BE in Computer Engineering</b> at Rajgad Technical Campus, Pune, graduating June 2026.</p>
+      </div>
+      <div>
+        <div class="edu-card">
+          <div class="school">Rajgad Technical Campus, Pune</div>
+          <div class="deg">BE — Computer Engineering</div>
+          <div class="meta"><span>Nov 2022 – Jun 2026</span><b>SGPA 9.40/10</b></div>
+        </div>
+        <div class="edu-card">
+          <div class="school">Mudhoji High School &amp; JR College, Phaltan</div>
+          <div class="deg">HSC — Science</div>
+          <div class="meta"><span>Jun 2020 – May 2022</span><b>61%</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ===== -->
+<section class="sect" id="work" style="background:var(--panel-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="sh-eyebrow">03 · Experience &amp; Work</span><h2 class="sh-title">What I've shipped</h2></div>
+      <p class="sh-note">One internship, three projects, all built end to end.</p>
+    </div>
+    <div class="work-grid">
+
+      <div class="work-card reveal">
+        <div class="wc-top"><div class="wc-title">Full-Stack Developer Intern — Sync Solutions</div><div class="wc-badge">FEB – MAR 2025</div></div>
+        <p class="wc-desc">Built responsive, mobile-first UI components with React.js and Tailwind CSS that measurably improved the app's usability and performance. Worked inside a real production environment using Git-based workflows and component-driven architecture alongside the existing team.</p>
+        <div class="wc-tools"><span>React.js</span><span>Tailwind CSS</span><span>JavaScript</span><span>Git</span><span>GitHub</span></div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="wc-top"><div class="wc-title">Smart Mess System</div><div class="wc-badge">MERN + SOLIDITY + AI</div></div>
+        <p class="wc-problem"><b>Problem —</b> manual mess tracking led to inaccurate attendance, low transparency, and day-to-day inefficiency.</p>
+        <p class="wc-desc">A full-stack mess management platform with automated attendance tracking and smart-contract-based record validation, giving mess operators and students a transparent, tamper-resistant log.</p>
+        <div class="wc-tools"><span>MongoDB</span><span>Express.js</span><span>React.js</span><span>Node.js</span><span>Tailwind CSS</span><span>Solidity</span><span>Ethers.js</span><span>AI APIs</span></div>
+        <div class="wc-links"><a href="https://smart-mess-system.vercel.app/" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="wc-top"><div class="wc-title">MintVerse — NFT Minting with AI Verification</div><div class="wc-badge">MERN + ERC-721</div></div>
+        <p class="wc-problem"><b>Problem —</b> duplicate and low-quality NFTs erode trust and authenticity across marketplaces.</p>
+        <p class="wc-desc">An NFT minting platform with wallet authentication and AI-based similarity detection that flags duplicates before they're minted, built on MERN with Ethereum smart contracts and IPFS storage.</p>
+        <div class="wc-tools"><span>MERN Stack</span><span>Solidity (ERC-721)</span><span>Ethers.js</span><span>IPFS</span><span>MetaMask</span><span>AI APIs</span></div>
+        <div class="wc-links"><a href="https://mintverse-nftminting.netlify.app/" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="wc-top"><div class="wc-title">Centralized CESA Web Platform</div><div class="wc-badge">3D · REACT · THREE.JS</div></div>
+        <p class="wc-problem"><b>Problem —</b> college event systems were scattered and non-interactive, hurting engagement and efficiency.</p>
+        <p class="wc-desc">An interactive 3D web platform built with Three.js to centralize college event management and pull students into a more engaging experience — built and shipped in a single 5-hour hackathon push.</p>
+        <div class="wc-tools"><span>React.js</span><span>Three.js</span><span>Tailwind CSS</span><span>Node.js</span><span>Vercel</span></div>
+        <div class="wc-links"><a href="https://rdtccesa.vercel.app/" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+
+      <div class="work-card reveal">
+        <div class="wc-top"><div class="wc-title">Magnet And Posters</div><div class="wc-badge">REACT · NodeJS</div></div>
+        <p class="wc-problem"><b>Problem —</b>Creating custom, high-quality photo magnets and posters online often involves confusing design interfaces and slow checkout processes.</p>
+        <p class="wc-desc"> I built a full-stack e-commerce application with an intuitive customizer and a streamlined checkout flow to make personalized printing effortless.</p>
+        <div class="wc-tools"><span>React.js</span><span>Cloudinary</span><span>Tailwind CSS</span><span>Node.js</span><span>Vercel</span><span>Razorpay</span></div>
+        <div class="wc-links"><a href="https://magnets-andposters-rgi2.vercel.app/" target="_blank" rel="noopener">View on GitHub →</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACHIEVEMENTS / CERTS ===== -->
+<section class="sect" id="achievements">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="sh-eyebrow">04 · Recognition</span><h2 class="sh-title">Achievements &amp; certifications</h2></div>
+    </div>
+    <div class="two-col">
+      <div>
+        <span class="col-label">Achievements</span>
+        <div class="list-item">
+          <div class="list-icon">🏆</div>
+          <div><div class="li-title">2nd Place — TechnoVision 2K25 Project Competition</div><div class="li-sub">Centralized Web Platform (CESA) — built in 5 hours with a 4-member team.</div></div>
+          <div class="li-date">Apr 2025</div>
+        </div>
+      </div>
+      <div>
+        <span class="col-label">Certifications</span>
+        <div class="list-item"><div class="list-icon">◆</div><div><div class="li-title">Full Stack Generative &amp; Agentic AI with Python</div><div class="li-sub">Credential verified</div></div><div class="li-date">Jun 2026</div></div>
+        <div class="list-item"><div class="list-icon">◆</div><div><div class="li-title">Full Stack Web Development — Apna College</div><div class="li-sub">Credential verified</div></div><div class="li-date">Jul 2025</div></div>
+        <div class="list-item"><div class="list-icon">◆</div><div><div class="li-title">Blockchain Basics Certification — Cyfrin</div><div class="li-sub">Credential verified</div></div><div class="li-date">Feb 2026</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="sect" id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <span class="sh-eyebrow" style="text-align:center; display:block;">05 · Contact</span>
+      <h2 class="contact-title">Let's build<br><span class="lime">something real.</span></h2>
+      <p class="contact-desc">Open to full-stack, Web3, and AI-adjacent roles and freelance builds. Email is the fastest way to reach me — I usually reply within a day.</p>
+      <div class="contact-links">
+        <a href="mailto:jaydipjadhav2512@gmail.com" class="btn btn-primary">✉ jaydipjadhav2512@gmail.com</a>
+        <a href="tel:+917249824513" class="btn btn-ghost">☎ +91 72498 24513</a>
+        <a href="https://github.com/JaydipJadhav25" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        <a href="https://www.linkedin.com/in/jaydip-jadhav-62172829a/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Jaydip Jadhav</span><span>Pune, Maharashtra, India</span></div>
+  </div>
+</section>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  const roles = ["MERN Developer","Blockchain Engineer","Web3 Builder","AI-Curious Full-Stack Dev"];
+  const track = document.getElementById('roleTrack');
+  let ri = 0;
+  setInterval(()=>{
+    ri = (ri+1) % roles.length;
+    track.style.transition = 'transform .5s cubic-bezier(.6,0,.2,1)';
+    track.style.transform = `translateY(-${ri*30}px)`;
+    if(ri === roles.length-1){
+      setTimeout(()=>{
+        track.innerHTML = roles.map(r=>`<span>${r}</span>`).join('');
+      }, 50);
+    }
+  }, 2200);
+  track.innerHTML = roles.map(r=>`<span>${r}</span>`).join('');
+</script>
+
+</body>
+</html>
